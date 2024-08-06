@@ -8,8 +8,12 @@
     "build": "tsc ",
     "type-check": "tsc --noEmit",
     "lint": "eslint",
-    "lint:fix": "eslint --fix"
+    "lint:fix": "eslint --fix",
+    "prettier:fix": "prettier --write src/",
+    "prettier:check": "prettier --check src/",
+    "prepare": "husky"
   },
+
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -20,6 +24,8 @@
     "eslint-plugin-jest": "^28.7.0",
     "eslint-plugin-prettier": "^5.2.1",
     "globals": "^15.9.0",
+    "husky": "^9.1.4",
+    "lint-staged": "^15.2.8",
     "nodemon": "^3.1.4",
     "prettier": "3.3.3",
     "ts-node": "^10.9.2",
