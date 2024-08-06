@@ -107,5 +107,5 @@
   },
   "include": [
     "src/**/*"
-  ]
+, "tests/math.test.ts"  ]
 }

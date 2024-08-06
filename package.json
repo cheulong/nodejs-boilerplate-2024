@@ -11,14 +11,16 @@
     "lint:fix": "eslint --fix",
     "prettier:fix": "prettier --write src/",
     "prettier:check": "prettier --check src/",
-    "prepare": "husky"
+    "prepare": "husky",
+    "test": "vitest",
+    "test:ui": "vitest --ui"
   },
-
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@eslint/js": "^9.8.0",
+    "@vitest/ui": "^2.0.5",
     "eslint": "^9.8.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-jest": "^28.7.0",
@@ -30,7 +32,8 @@
     "prettier": "3.3.3",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4",
-    "typescript-eslint": "^8.0.1"
+    "typescript-eslint": "^8.0.1",
+    "vitest": "^2.0.5"
   },
   "overrides": {
     "eslint": "^9.8.0"
