@@ -3,14 +3,16 @@ import dotenv from "dotenv";
 import contactRoutes from "./api/v1/routes/contactRoutes";
 import userRoutes from "./api/v1/routes/userRoutes";
 import errorHandler from "./api/v1/middlewares/errorHandler";
-import connectDb from "./config/databaseConfig";
+// import connectDb from "./config/databaseConfig";
 import logger from "./config/logger";
 import morgan from "morgan";
+import { swaggerSetup } from "./config/swagger";
+import supabase from "./config/supabase";
 
 const morganFormat = ":method :url :status :response-time ms";
 
 dotenv.config();
-connectDb();
+// connectDb();
 const app = express();
 
 const port = process.env.PORT || 5000;
@@ -37,4 +39,5 @@ app.use(errorHandler);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
+  swaggerSetup(app);
 });
