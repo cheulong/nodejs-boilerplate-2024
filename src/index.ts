@@ -2,9 +2,10 @@ import express from "express";
 import dotenv from "dotenv";
 import contactRoutes from "./api/v1/routes/contactRoutes";
 import errorHandler from "./api/v1/middlewares/errorHandler";
+import connectDb from "./config/databaseConfig";
 
 dotenv.config();
-
+connectDb();
 const app = express();
 
 const port = process.env.PORT || 5000;
