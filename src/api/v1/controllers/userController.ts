@@ -2,6 +2,7 @@ import asyncHandler from "express-async-handler";
 import User from "../models/userModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { Request } from "express";
 
 //@desc Register user
 //@route POST api/users/register
@@ -17,7 +18,10 @@ const registerUser = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("User already exists");
   }
-  const hashedPassword = await bcrypt.hash(password, 10);
+  const hashedPassword = await bcrypt.hash(
+    password,
+    process.env.BCRYPT_SALT ?? 10,
+  );
   const user = await User.create({ username, email, password: hashedPassword });
   if (user) {
     res
@@ -52,7 +56,7 @@ const loginUser = asyncHandler(async (req, res) => {
       },
       process.env.JWT_SECRET ?? "",
       {
-        expiresIn: "1m",
+        expiresIn: process.env.JWT_EXPIRATION ?? "1m",
       },
     );
     res.status(200).json({ accessToken });
@@ -65,8 +69,9 @@ const loginUser = asyncHandler(async (req, res) => {
 //@desc Current user info
 //@route POST api/users/current
 //@access Private
-const currentUser = asyncHandler(async (req, res) => {
-  res.status(200).json({ message: "Current user" });
+const currentUser = asyncHandler(async (req: Request, res) => {
+  //@ts-expect-error user is added to req
+  res.status(200).json(req.user);
 });
 
 export { registerUser, loginUser, currentUser };
