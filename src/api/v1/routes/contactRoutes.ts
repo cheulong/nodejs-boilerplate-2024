@@ -6,9 +6,11 @@ import {
   updateContactById,
   deleteContactById,
 } from "../controllers/contactControllers";
+import validateTokenHandler from "../middlewares/validateTokenHandler";
 
 const router = Router();
 
+router.use(validateTokenHandler);
 router.route("/").get(getAllContacts).post(createNewContact);
 
 router
