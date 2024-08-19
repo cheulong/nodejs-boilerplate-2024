@@ -1,5 +1,6 @@
 import { ErrorRequestHandler, NextFunction, Request, Response } from "express";
 import { constants } from "../../../config/constants";
+import { Error } from "mongoose";
 
 const {
   VALIDATION_ERROR,
@@ -15,6 +16,13 @@ const errorHandler: ErrorRequestHandler = (
   res: Response,
   next: NextFunction,
 ) => {
+  if (err instanceof Error.CastError) {
+    return res.status(VALIDATION_ERROR).json({
+      title: "Invalid ID format",
+      message: err.message,
+      stackTrace: err.stack,
+    });
+  }
   const statusCode = res.statusCode ?? INTERNAL_SERVER_ERROR;
   if (err instanceof Error) {
     switch (statusCode) {
