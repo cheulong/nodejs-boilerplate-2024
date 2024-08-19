@@ -1,6 +1,6 @@
 import asyncHandler from "express-async-handler";
-import getTokenFromHeader from "../utils/auth.js";
-import getUserFromToken from "../utils/user.js";
+import getTokenFromHeader from "../utils/auth";
+import getUserFromToken from "../utils/user";
 import { NextFunction, Request, Response } from "express";
 
 const validateTokenHandler = asyncHandler(
