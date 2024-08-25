@@ -1,13 +1,13 @@
 import asyncHandler from "express-async-handler";
 import { Request, Response } from "express";
 import Contact from "../models/contactModel";
+import { ContactSchema } from "../validations/contact";
 
 //@desc Get all contacts
 //@route GET api/contacts
 //@access Private
 const getAllContacts = asyncHandler(async (req: Request, res: Response) => {
-  //@ts-expect-error user is added to req
-  const contacts = await Contact.find({ user_id: req.user._id });
+  const contacts = await Contact.find({});
   res.status(200).json(contacts);
 });
 
@@ -15,15 +15,13 @@ const getAllContacts = asyncHandler(async (req: Request, res: Response) => {
 //@route POST api/contacts
 //@access Private
 const createNewContact = asyncHandler(async (req: Request, res: Response) => {
-  const { name, email, phone } = req.body;
-  if (!name || !email || !phone) {
-    res.status(400);
+  const { success, error, data } = ContactSchema.safeParse(req.body);
+  if (!success) {
+    res.status(400).json({ error });
     throw new Error("Missing required fields");
   }
   const contact = await Contact.create({
-    name,
-    email,
-    phone,
+    ...data,
     //@ts-expect-error user is added to req
     user_id: req.user._id,
   });
