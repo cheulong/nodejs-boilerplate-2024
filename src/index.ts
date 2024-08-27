@@ -7,6 +7,8 @@ import connectMongoDb from "./config/databaseConfig";
 import logger from "./config/logger";
 import morgan from "morgan";
 import { swaggerSetup } from "./config/swagger";
+import { db } from "./config/drizzle/db";
+import { UserTable } from "./config/drizzle/drizzle.schema";
 // import supabase from "./config/supabase";
 
 const morganFormat = ":method :url :status :response-time ms";
@@ -37,5 +39,10 @@ app.use("/api/contacts", contactRoutes);
 app.use("/api/users", userRoutes);
 app.use(errorHandler);
 swaggerSetup(app);
+app.get("/", async (req, res) => {
+  // await db.insert(UserTable).values({ name: "John Do" });
+  const users = await db.query.UserTable.findMany();
+  res.send(users);
+});
 
 export default app;
